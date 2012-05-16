@@ -4,7 +4,7 @@
 // Created by Billy Gray on 2/26/09.
 // Copyright (c) 2009, 2010, ZETETIC LLC
 // All rights reserved.
-// 
+//
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are met:
 //     * Redistributions of source code must retain the above copyright
@@ -15,7 +15,7 @@
 //     * Neither the name of the ZETETIC LLC nor the
 //       names of its contributors may be used to endorse or promote products
 //       derived from this software without specific prior written permission.
-// 
+//
 // THIS SOFTWARE IS PROVIDED BY ZETETIC LLC ''AS IS'' AND ANY
 // EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
 // WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
@@ -27,36 +27,61 @@
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 // SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-
 #import <Foundation/Foundation.h>
 
 @interface NSDate (Helper)
 
-- (NSUInteger)daysAgo;
-- (NSUInteger)daysAgoAgainstMidnight;
-- (NSString *)stringDaysAgo;
-- (NSString *)stringDaysAgoAgainstMidnight:(BOOL)flag;
-- (NSUInteger)weekday;
+-(NSUInteger)daysAgo;
+-(NSUInteger)daysAgoAgainstMidnight;
+-(NSString *)stringDaysAgo;
+-(NSString *)stringDaysAgoAgainstMidnight:(BOOL)flag;
+-(NSUInteger)weekday;
 
-+ (NSDate *)dateFromString:(NSString *)string;
-+ (NSDate *)dateFromString:(NSString *)string withFormat:(NSString *)format;
-+ (NSString *)stringFromDate:(NSDate *)date withFormat:(NSString *)string;
-+ (NSString *)stringFromDate:(NSDate *)date;
-+ (NSString *)stringForDisplayFromDate:(NSDate *)date;
-+ (NSString *)stringForDisplayFromDate:(NSDate *)date prefixed:(BOOL)prefixed;
-+ (NSString *)stringForDisplayFromDate:(NSDate *)date prefixed:(BOOL)prefixed alwaysDisplayTime:(BOOL)displayTime;
++(NSDate *)dateFromString:(NSString *)string;
++(NSDate *)dateFromString:(NSString *)string withFormat:(NSString *)format;
++(NSString *)stringFromDate:(NSDate *)date withFormat:(NSString *)string;
++(NSString *)stringFromDate:(NSDate *)date;
++(NSString *)stringForDisplayFromDate:(NSDate *)date;
++(NSString *)stringForDisplayFromDate:(NSDate *)date prefixed:(BOOL)prefixed;
+//+ (NSString *)stringForDisplayFromDate:(NSDate *)date prefixed:(BOOL)prefixed alwaysDisplayTime:(BOOL)displayTime;
 
-- (NSString *)string;
-- (NSString *)stringWithFormat:(NSString *)format;
-- (NSString *)stringWithDateStyle:(NSDateFormatterStyle)dateStyle timeStyle:(NSDateFormatterStyle)timeStyle;
+-(NSString *)string;
+-(NSString *)stringWithFormat:(NSString *)format;
+-(NSString *)stringWithDateStyle:(NSDateFormatterStyle) dateStyle timeStyle:(NSDateFormatterStyle)timeStyle;
 
-- (NSDate *)beginningOfWeek;
-- (NSDate *)beginningOfDay;
-- (NSDate *)endOfWeek;
+-(NSDate *)beginningOfWeekForTimeZone:(NSTimeZone *)zone;
+-(NSDate *)beginningOfWeek;
+-(NSDate *)beginningOfDayForTimeZone:(NSTimeZone *)zone;
+-(NSDate *)beginningOfDay;
+-(NSDate *)endOfWeekForTimeZone:(NSTimeZone *)zone;
+-(NSDate *)endOfWeek;
+// New
+-(NSDate *)justTheDateForTimeZone:(NSTimeZone *)zone;
+-(NSDate *)justTheDate;
+-(NSDate *)beginningOfMonthForTimeZone:(NSTimeZone *)zone;
+-(NSDate *)beginningOfYearForTimeZone:(NSTimeZone *)zone;
+-(NSDate *)daysAgo:(int)days forTimeZone:(NSTimeZone *)zone;
+-(NSDate *)weeksAgo:(int)weeks forTimeZone:(NSTimeZone *)zone;
+-(NSDate *)monthsAgo:(int)months forTimeZone:(NSTimeZone *)zone;
+-(NSDate *)yearsAgo:(int)years forTimeZone:(NSTimeZone *)zone;
+-(NSDate *)nextDayForTimeZone:(NSTimeZone *)zone;
+-(NSDate *)nextWeekForTimeZone:(NSTimeZone *)zone;
+-(NSDate *)nextMonthForTimeZone:(NSTimeZone *)zone;
+-(NSDate *)nextYearForTimeZone:(NSTimeZone *)zone;
+-(NSDate *)beginningOfMonth;
+-(NSDate *)beginningOfYear;
+-(NSDate *)daysAgo:(int)days;
+-(NSDate *)weeksAgo:(int)weeks;
+-(NSDate *)monthsAgo:(int)months;
+-(NSDate *)yearsAgo:(int)years;
+-(NSDate *)nextDay;
+-(NSDate *)nextWeek;
+-(NSDate *)nextMonth;
+-(NSDate *)nextYear;
 
-+ (NSString *)dateFormatString;
-+ (NSString *)timeFormatString;
-+ (NSString *)timestampFormatString;
-+ (NSString *)dbFormatString;
++(NSString *)dateFormatString;
++(NSString *)timeFormatString;
++(NSString *)timestampFormatString;
++(NSString *)dbFormatString;
 
 @end
