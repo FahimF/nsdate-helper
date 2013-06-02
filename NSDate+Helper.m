@@ -32,6 +32,8 @@
 
 @implementation NSDate (Helper)
 
+static NSDateFormatter *displayFormatter;
+
 /*
  * This guy can be a little unreliable and produce unexpected results,
  * you're better off using daysAgoAgainstMidnight
@@ -50,7 +52,6 @@
 	NSDateFormatter *mdf = [[NSDateFormatter alloc] init];
 	[mdf setDateFormat:@"yyyy-MM-dd"];
 	NSDate *midnight = [mdf dateFromString:[mdf stringFromDate:self]];
-	[mdf release];
 	return (int)[midnight timeIntervalSinceNow] / (60 * 60 * 24) * -1;
 }
 
@@ -90,10 +91,8 @@
 
 +(NSDate *)dateFromString:(NSString *)string withFormat:(NSString *)format {
 	NSDateFormatter *inputFormatter = [[NSDateFormatter alloc] init];
-
 	[inputFormatter setDateFormat:format];
 	NSDate *date = [inputFormatter dateFromString:string];
-	[inputFormatter release];
 	return date;
 }
 
@@ -113,7 +112,7 @@
 	 * else display as Nov 11, 2008
 	 */
 	NSCalendar *calendar = [NSCalendar currentCalendar];
-	NSDateFormatter *displayFormatter = [[NSDateFormatter alloc] init];
+	displayFormatter = [[NSDateFormatter alloc] init];
 
 	NSDate *today = [NSDate date];
 	NSDateComponents *offsetComponents = [calendar components:(NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit)
@@ -136,7 +135,6 @@
 		NSDateComponents *componentsToSubtract = [[NSDateComponents alloc] init];
 		[componentsToSubtract setDay:-7];
 		NSDate *lastweek = [calendar dateByAddingComponents:componentsToSubtract toDate:today options:0];
-		[componentsToSubtract release];
 		NSComparisonResult lastweek_result = [date compare:lastweek];
 		if (lastweek_result == NSOrderedDescending) {
 			[displayFormatter setDateFormat:@"EEEE"];             // Tuesday
@@ -162,9 +160,6 @@
 
 	// use display formatter to return formatted date string
 	displayString = [displayFormatter stringFromDate:date];
-
-	[displayFormatter release];
-
 	return displayString;
 }
 
@@ -174,10 +169,8 @@
 
 -(NSString *)stringWithFormat:(NSString *)format {
 	NSDateFormatter *outputFormatter = [[NSDateFormatter alloc] init];
-
 	[outputFormatter setDateFormat:format];
 	NSString *timestamp_str = [outputFormatter stringFromDate:self];
-	[outputFormatter release];
 	return timestamp_str;
 }
 
@@ -187,11 +180,9 @@
 
 -(NSString *)stringWithDateStyle:(NSDateFormatterStyle)dateStyle timeStyle:(NSDateFormatterStyle)timeStyle {
 	NSDateFormatter *outputFormatter = [[NSDateFormatter alloc] init];
-
 	[outputFormatter setDateStyle:dateStyle];
 	[outputFormatter setTimeStyle:timeStyle];
 	NSString *outputString = [outputFormatter stringFromDate:self];
-	[outputFormatter release];
 	return outputString;
 }
 
@@ -216,7 +207,6 @@
 	[componentsToSubtract setDay:0 - ([weekdayComponents weekday] - 1)];
 	beginningOfWeek = nil;
 	beginningOfWeek = [calendar dateByAddingComponents:componentsToSubtract toDate:self options:0];
-	[componentsToSubtract release];
 	//normalize to midnight, extract the year, month, and day components and create a new date from those components.
 	NSDateComponents *components = [calendar components:(NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit) fromDate:beginningOfWeek];
 	return [calendar dateFromComponents:components];
@@ -247,7 +237,6 @@
 	// to get the end of week for a particular date, add (7 - weekday) days
 	[componentsToAdd setDay:(7 - [weekdayComponents weekday])];
 	NSDate *endOfWeek = [calendar dateByAddingComponents:componentsToAdd toDate:self options:0];
-	[componentsToAdd release];
 	return endOfWeek;
 }
 
@@ -297,7 +286,6 @@
 	NSDateComponents *comps = [[NSDateComponents alloc] init];
 	[comps setDay:days];
 	ret = [calendar dateByAddingComponents:comps toDate:self options:0];
-	[comps release];
 	return ret;
 }
 
@@ -308,7 +296,6 @@
 	NSDateComponents *comps = [[NSDateComponents alloc] init];
 	[comps setWeek:weeks];
 	ret = [calendar dateByAddingComponents:comps toDate:self options:0];
-	[comps release];
 	return ret;
 }
 
@@ -319,7 +306,6 @@
 	NSDateComponents *comps = [[NSDateComponents alloc] init];
 	[comps setMonth:months];
 	ret = [calendar dateByAddingComponents:comps toDate:self options:0];
-	[comps release];
 	return ret;
 }
 
@@ -330,7 +316,6 @@
 	NSDateComponents *comps = [[NSDateComponents alloc] init];
 	[comps setYear:years];
 	ret = [calendar dateByAddingComponents:comps toDate:self options:0];
-	[comps release];
 	return ret;
 }
 
